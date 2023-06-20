@@ -27,6 +27,8 @@ public class Team {
 	
 	private String description;
 	
+	private boolean active = true;
+	
 	@ManyToOne
 	private Company company;
 	

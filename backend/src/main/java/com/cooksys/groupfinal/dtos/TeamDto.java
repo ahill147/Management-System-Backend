@@ -16,5 +16,7 @@ public class TeamDto {
     private String description;
     
     private Set<BasicUserDto> teammates;
+    
+    private Set<ProjectDto> projects;
 
 }
