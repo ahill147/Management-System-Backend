@@ -22,6 +22,8 @@ public class Announcement {
 	@GeneratedValue
 	private Long id;
 	
+	private boolean deleted = false;
+	
 	@CreatedDate
     private Timestamp date = Timestamp.valueOf(LocalDateTime.now());
 	
