@@ -1,20 +1,21 @@
 package com.cooksys.groupfinal.services;
 
+import java.util.List;
+
 import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
-import com.cooksys.groupfinal.dtos.UserRequestDto;
+import com.cooksys.groupfinal.dtos.UserCreateDto;
 
 public interface UserService {
 
 	FullUserDto login(CredentialsDto credentialsDto);
 
-	FullUserDto createUser(UserRequestDto userDto);
+	FullUserDto createUser(Long companyId, UserCreateDto userCreateDto);
 
-	FullUserDto updateUser(Long id, UserRequestDto userDto);
+	FullUserDto updateUser(Long id, UserCreateDto userCreateDto);
 
-	FullUserDto getUserById(Long id);
+	void deleteUser(Long id, CredentialsDto credentialsDto);
 
-	void deleteUser(Long id);
-
+	List<FullUserDto> getAllUsers(CredentialsDto credentialsDto);
    
 }
