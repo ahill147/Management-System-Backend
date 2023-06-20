@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
+import com.cooksys.groupfinal.dtos.UserRequestDto;
 import com.cooksys.groupfinal.entities.Credentials;
 import com.cooksys.groupfinal.entities.User;
 import com.cooksys.groupfinal.exceptions.BadRequestException;
@@ -49,6 +50,30 @@ public class UserServiceImpl implements UserService {
         	userRepository.saveAndFlush(userToValidate);
         }
         return fullUserMapper.entityToFullUserDto(userToValidate);
+	}
+
+	@Override
+	public FullUserDto createUser(UserRequestDto userDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public FullUserDto updateUser(Long id, UserRequestDto userDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public FullUserDto getUserById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteUser(Long id) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

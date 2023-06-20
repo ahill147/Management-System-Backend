@@ -1,5 +1,7 @@
 package com.cooksys.groupfinal.services.impl;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -67,6 +69,8 @@ public class ProjectServiceImpl implements ProjectService {
 		} else {
 			existingProject.setTeam(null); // If team id is not provided, set it to null
 		}
+	    // Update the lastEdited field with the current timestamp
+		existingProject.setLastEdited(new Timestamp(System.currentTimeMillis()));
 		// Save the updated project using the ProjectRepository
 		existingProject = projectRepository.save(existingProject);
 		// Map the saved Project entity back to a ProjectDto and return it

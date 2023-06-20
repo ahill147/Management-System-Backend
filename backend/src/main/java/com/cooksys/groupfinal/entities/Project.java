@@ -1,5 +1,9 @@
 package com.cooksys.groupfinal.entities;
 
+import java.sql.Timestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -25,5 +29,9 @@ public class Project {
 	
 	@ManyToOne
 	private Team team;
+	
+	@UpdateTimestamp
+	@Column(name = "last_edited")
+	private Timestamp lastEdited;
 
 }

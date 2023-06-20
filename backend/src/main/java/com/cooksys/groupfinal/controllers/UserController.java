@@ -23,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 	
 	private final UserService userService;
-	private final UserRequestDto userDto;
 	
 	@PostMapping("/login")
 	@CrossOrigin(origins="*")
