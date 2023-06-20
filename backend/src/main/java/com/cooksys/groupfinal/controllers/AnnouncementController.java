@@ -2,6 +2,8 @@ package com.cooksys.groupfinal.controllers;
 
 import com.cooksys.groupfinal.dtos.AnnouncementDto;
 import com.cooksys.groupfinal.dtos.AnnouncementRequestDto;
+import com.cooksys.groupfinal.dtos.CredentialsDto;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.cooksys.groupfinal.services.AnnouncementService;
@@ -25,6 +27,12 @@ public class AnnouncementController {
 	@PostMapping("/{companyId}")
 	public AnnouncementDto createAnnouncement(@RequestBody AnnouncementRequestDto announcementRequestDto) {
 		return announcementService.createAnnouncement(announcementRequestDto);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<AnnouncementDto> deleteAnnouncement(@PathVariable Long id,
+															  @RequestBody CredentialsDto credentialsDto) {
+		return ResponseEntity.ok(announcementService.deleteAnnouncement(id, credentialsDto));
 	}
 
 }

@@ -2,6 +2,7 @@ package com.cooksys.groupfinal.services.impl;
 
 import com.cooksys.groupfinal.dtos.AnnouncementDto;
 import com.cooksys.groupfinal.dtos.AnnouncementRequestDto;
+import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.entities.Announcement;
 import com.cooksys.groupfinal.entities.Company;
 import com.cooksys.groupfinal.entities.User;
@@ -18,6 +19,7 @@ import com.cooksys.groupfinal.services.AnnouncementService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -39,30 +41,72 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     @Override
     public AnnouncementDto createAnnouncement(AnnouncementRequestDto announcementRequestDto) {
 
-        // find a user by credentials - username //
-        User author = userRepository
-                .findByCredentialsUsernameAndActiveTrue(announcementRequestDto.getCredentials().getUsername())
-                .orElseThrow(() -> new NotFoundException("User not found"));
+        Optional <User> optionalAuthor = userRepository.findByCredentialsUsernameAndActiveTrue(announcementRequestDto.getCredentials().getUsername());
 
-        // if the credentials do not match throw bad request error //
-        if (!author.isAdmin() || !author.getCredentials().getPassword()
-                .equals(announcementRequestDto.getCredentials().getPassword())) {
+        // if optional author is empty throw not found exception //
+        if (optionalAuthor.isEmpty()) {
+            throw new NotFoundException("user not found");
+        }
+        User author = optionalAuthor.get();
+
+        // if the credentials do not match the Dto throw bad request exception //
+        if (!author.isAdmin() || !author.getCredentials().getPassword().equals(announcementRequestDto.getCredentials().getPassword())) {
             throw new BadRequestException("Invalid credentials");
         }
 
-        // find  a company by its companyId - else throw not found exception //
-        Company company = companyRepository.findById(announcementRequestDto.getCompanyId())
-                .orElseThrow(() -> new NotFoundException("Company not found"));
+        Optional <Company> optionalCompany = companyRepository.findById(announcementRequestDto.getCompanyId());
 
-        // map announcement from dto back to entity //
+        // if the optional company is empty throw not found exception //
+        if (optionalCompany.isEmpty()) {
+            throw new NotFoundException("company not found");
+        }
+        Company company = optionalCompany.get();
+
+        // map announcement from Dto back to entity //
         Announcement announcement = announcementMapper.dtoToEntity(announcementRequestDto);
 
         // set author and company of announcement //
         announcement.setAuthor(author);
         announcement.setCompany(company);
 
-        // save announcement to repository //
-        Announcement savedAnnouncement = announcementRepository.save(announcement);
+        // save announcement to repository and save it //
+        Announcement savedAnnouncement = announcementRepository.saveAndFlush(announcement);
+
+        // map entity back to a Dto and return it //
+        return announcementMapper.entityToDto(savedAnnouncement);
+    }
+
+    // DELETE - DELETE EXISTING ANNOUNCEMENT //
+    @Override
+    public AnnouncementDto deleteAnnouncement(Long id, CredentialsDto credentialsDto) {
+
+        Optional<User> optionalAuthor = userRepository.findByCredentialsUsernameAndActiveTrue(credentialsDto.getUsername());
+
+        // if optional author is empty throw not found exception //
+        if (optionalAuthor.isEmpty()) {
+            throw new NotFoundException("user not found");
+        }
+        User author = optionalAuthor.get();
+
+        // if the credentials do not match throw bad request exception //
+        if (!author.isAdmin() || !author.getCredentials().getPassword().equals(credentialsDto.getPassword())) {
+            throw new BadRequestException("Invalid credentials");
+        }
+
+        Optional <Announcement> optionalAnnouncement = announcementRepository.findById(id);
+
+        // if optional announcement is empty throw not found exception //
+        if (optionalAnnouncement.isEmpty()) {
+            throw new NotFoundException("announcement not found or is deleted");
+        }
+        Announcement announcement = optionalAnnouncement.get();
+
+        // delete announcement from repository and save it //
+        announcement.setDeleted(true);
+        announcementRepository.delete(announcement);
+        Announcement savedAnnouncement = announcementRepository.saveAndFlush(announcement);
+
+        // map entity back to a Dto and return it //
         return announcementMapper.entityToDto(savedAnnouncement);
     }
 
