@@ -1,6 +1,5 @@
 package com.cooksys.groupfinal.services.impl;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -128,11 +127,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	// just for testing
-	@Override
-	public List<FullUserDto> getAllUsers(CredentialsDto credentialsDto) {
-		checkUserPermissions(credentialsDto);
-		List<User> allUsers = userRepository.findAll();
-		return fullUserMapper.entitiesToUserListDtos(allUsers);
-	}
+//	@Override
+//	public List<FullUserDto> getAllUsers(CredentialsDto credentialsDto) {
+//		checkUserPermissions(credentialsDto);
+//		List<User> allUsers = userRepository.findAll();
+//		return fullUserMapper.entitiesToUserListDtos(allUsers);
+//	}
 	
 }

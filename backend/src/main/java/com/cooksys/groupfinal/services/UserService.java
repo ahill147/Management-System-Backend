@@ -1,7 +1,5 @@
 package com.cooksys.groupfinal.services;
 
-import java.util.List;
-
 import com.cooksys.groupfinal.dtos.CredentialsDto;
 import com.cooksys.groupfinal.dtos.FullUserDto;
 import com.cooksys.groupfinal.dtos.UserCreateDto;
@@ -16,6 +14,6 @@ public interface UserService {
 
 	void deleteUser(Long id, CredentialsDto credentialsDto);
 
-	List<FullUserDto> getAllUsers(CredentialsDto credentialsDto);
+//	List<FullUserDto> getAllUsers(CredentialsDto credentialsDto);
    
 }
