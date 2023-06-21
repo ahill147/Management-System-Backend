@@ -36,8 +36,8 @@ public class TeamController {
 	}
 //	
 	@DeleteMapping("/{id}")
-	public TeamDto deleteTeam(@PathVariable Long id, @RequestBody CredentialsDto credentialsDto) {
-		return teamService.deleteTeam(id, credentialsDto);
+	public void deleteTeam(@PathVariable Long id, @RequestBody CredentialsDto credentialsDto) {
+		teamService.deleteTeam(id, credentialsDto);
 	}
 	
 }

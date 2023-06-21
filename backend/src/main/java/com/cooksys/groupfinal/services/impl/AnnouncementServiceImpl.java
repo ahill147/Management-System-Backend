@@ -78,7 +78,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     // DELETE - DELETE EXISTING ANNOUNCEMENT //
     @Override
-    public AnnouncementDto deleteAnnouncement(Long id, CredentialsDto credentialsDto) {
+    public void deleteAnnouncement(Long id, CredentialsDto credentialsDto) {
 
         Optional<User> optionalAuthor = userRepository.findByCredentialsUsernameAndActiveTrue(credentialsDto.getUsername());
 
@@ -103,11 +103,10 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
         // delete announcement from repository and save it //
         announcement.setDeleted(true);
-        announcementRepository.delete(announcement);
         Announcement savedAnnouncement = announcementRepository.saveAndFlush(announcement);
 
         // map entity back to a Dto and return it //
-        return announcementMapper.entityToDto(savedAnnouncement);
+        announcementMapper.entityToDto(savedAnnouncement);
     }
 
 }

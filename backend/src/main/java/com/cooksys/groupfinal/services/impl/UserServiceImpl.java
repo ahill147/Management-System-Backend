@@ -127,6 +127,7 @@ public class UserServiceImpl implements UserService {
 		userRepository.saveAndFlush(userToDelete);
 	}
 	
+	// just for testing
 	@Override
 	public List<FullUserDto> getAllUsers(CredentialsDto credentialsDto) {
 		checkUserPermissions(credentialsDto);

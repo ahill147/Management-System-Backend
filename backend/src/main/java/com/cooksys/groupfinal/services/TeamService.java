@@ -10,6 +10,6 @@ public interface TeamService {
 
 	TeamDto updateTeam(Long id, TeamRequestDto teamRequestDto);
 
-	TeamDto deleteTeam(Long id, CredentialsDto credentialsDto);
+	void deleteTeam(Long id, CredentialsDto credentialsDto);
 
 }

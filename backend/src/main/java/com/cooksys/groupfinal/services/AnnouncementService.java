@@ -12,5 +12,5 @@ public interface AnnouncementService {
 
     Set<AnnouncementDto> getAllAnnouncements();
 
-    AnnouncementDto deleteAnnouncement(Long id, CredentialsDto credentialsDto);
+    void deleteAnnouncement(Long id, CredentialsDto credentialsDto);
 }

@@ -119,7 +119,7 @@ public class TeamServiceImpl implements TeamService {
 	}
 	
 	@Override
-	public TeamDto deleteTeam(Long id, CredentialsDto credentialsDto) {
+	public void deleteTeam(Long id, CredentialsDto credentialsDto) {
 		Optional<Team> optionalTeam = teamRepository.findById(id);
 		if(optionalTeam.isEmpty()) {
 			throw new NotFoundException("The specified team could not be found");
@@ -127,7 +127,7 @@ public class TeamServiceImpl implements TeamService {
 		checkUserPermission(credentialsDto);
 		Team teamToDelete = optionalTeam.get();
 		teamToDelete.setActive(false);
-		return teamMapper.entityToDto(teamRepository.saveAndFlush(teamToDelete));
+		teamMapper.entityToDto(teamRepository.saveAndFlush(teamToDelete));
 	}
 
 }
